@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./MonthCalendar.module.css";
+import { getHolidays } from "@/data/holiday";
 
 interface MonthCalendarProps {
   year: number;
@@ -43,13 +44,24 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({ year, month }) => {
 
     //曜日を取得
     const weekday = new Date(year, month - 1, day).getDay();
+    const holiday = getHolidays(year).find(
+      (holiday) =>
+        holiday.date.getTime() === new Date(year, month - 1, day).getTime()
+    );
     const dateClass =
       weekday === Weekday.Sunday
         ? styles.wdSunday
         : weekday === Weekday.Saturday
           ? styles.wdSaturday
-          : "";
-    return <td className={`${dateClass} border border-black p-1`}>{day}</td>;
+          : holiday
+            ? styles.holiday
+            : "";
+    return (
+      <td className={`${dateClass} border border-black p-1`}>
+        <div>{day}</div>
+        <div className="text-xs">{holiday ? holiday.name : "　"}</div>
+      </td>
+    );
   };
 
   // 月の最後の曜日までの空白を追加
