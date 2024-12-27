@@ -59,7 +59,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({ year, month }) => {
     return (
       <td className={`${dateClass} border border-black p-1`}>
         <div>{day}</div>
-        <div className="text-xs">{holiday ? holiday.name : "　"}</div>
+        <div className="text-[0.5rem]">{holiday ? holiday.name : "　"}</div>
       </td>
     );
   };
